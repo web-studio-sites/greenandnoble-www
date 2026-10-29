@@ -1,0 +1,1011 @@
+# Sveltia CMS config: the content types editors see and the fields in each
+# form. Field names must match src/schemas.ts. See README.md.
+
+backend:
+  name: github
+  repo: simonclay/greenandnoble-source # Set per site: the site's private source repo
+  branch: main
+  base_url: https://sveltia-cms-auth.cms-tools.workers.dev # GitHub login helper (Cloudflare Worker, shared by all sites)
+
+media_folder: public/assets/images/uploads
+public_folder: /assets/images/uploads
+
+# Uploaded photos are converted to WebP and capped at 1920px, and file names
+# are cleaned up (no spaces), so a straight-from-camera or stock image doesn't
+# add megabytes to every page.
+media_libraries:
+  default:
+    config:
+      slugify_filename: true
+      transformations:
+        raster_image:
+          format: webp
+          quality: 82
+          width: 1920
+          height: 1920
+
+collections:
+  - name: pages
+    label: Pages
+    icon: description
+    files:
+      - name: home
+        label: Homepage
+        file: src/content/pages/home.json
+        fields:
+          - { name: metaTitle, label: "SEO: page title (browser tab and Google)", widget: string, hint: "Around 50 to 60 characters. Put the service and area first, e.g. Garden Maintenance in Richmond | Green & Noble" }
+          - { name: metaDescription, label: "SEO: description (Google search results)", widget: text, hint: "Around 140 to 160 characters. A plain summary that makes people want to click." }
+          - { name: shareImage, label: "SEO: share picture (optional)", widget: image, required: false, hint: "Shown when the page is shared on WhatsApp, Facebook or LinkedIn. Leave empty to use the top photo." }
+
+          - { name: heroImage, label: "Hero: photo", widget: image }
+          - { name: heroImageAlt, label: "Hero: photo description (for screen readers)", widget: string }
+          - { name: heroEyebrow, label: "Hero: small label", widget: string }
+          - { name: heroTitle, label: "Hero: heading", widget: string, hint: "Wrap words in *asterisks* to show them in gold italics" }
+          - { name: heroSubtitle, label: "Hero: sub-heading", widget: string, hint: "Wrap words in *asterisks* to show them in gold italics" }
+          - { name: heroIntro, label: "Hero: intro", widget: text }
+          - { name: heroPrimaryLabel, label: "Hero: quotation button text", widget: string }
+          - { name: heroSecondaryLabel, label: "Hero: services button text", widget: string }
+
+          - { name: servicesEyebrow, label: "Services: small label", widget: string }
+          - { name: servicesTitle, label: "Services: heading", widget: string, hint: "Wrap words in *asterisks* to show them in gold italics. The cards come from the Services list: tick Featured on a service to give it a card." }
+          - { name: servicesIntro, label: "Services: intro", widget: text }
+          - { name: alsoProvideLabel, label: "Services: label above the other services", widget: string }
+          - { name: allServicesLabel, label: "Services: button text", widget: string }
+
+          - { name: standardEyebrow, label: "Standard: small label", widget: string }
+          - { name: standardTitle, label: "Standard: heading", widget: string, hint: "Wrap words in *asterisks* to show them in gold italics" }
+          - { name: standardBody, label: "Standard: intro (blank line between paragraphs)", widget: text }
+          - name: standardStats
+            label: "Standard: three big figures"
+            widget: list
+            summary: "{{figure}} {{label}}"
+            fields:
+              - { name: figure, label: "Figure (e.g. £5m)", widget: string }
+              - { name: italic, label: "Figure in italics", widget: boolean, default: false }
+              - { name: label, label: Label, widget: string }
+              - { name: text, label: Line, widget: string }
+          - { name: standardImage, label: "Standard: photo", widget: image }
+          - { name: standardImageAlt, label: "Standard: photo description", widget: string }
+          - name: standardPoints
+            label: "Standard: points beside the photo"
+            widget: list
+            summary: "{{title}}"
+            fields:
+              - { name: title, label: Title, widget: string }
+              - { name: text, label: Text, widget: text }
+          - { name: standardStatement, label: "Standard: closing statement", widget: string, hint: "Wrap words in *asterisks* to show them in gold italics" }
+
+          - { name: workEyebrow, label: "Our work: small label", widget: string }
+          - { name: workTitle, label: "Our work: heading", widget: string, hint: "Wrap words in *asterisks* to show them in gold italics. The slider shows projects ticked Show on homepage." }
+          - { name: workLead, label: "Our work: large intro line", widget: string }
+          - { name: workIntro, label: "Our work: intro", widget: text }
+          - { name: workHint, label: "Our work: hint under the slider", widget: string }
+          - { name: workMoreText, label: "Our work: text above the gallery button", widget: text }
+          - { name: workMoreLabel, label: "Our work: gallery button text", widget: string }
+
+          - { name: presentationImage, label: "Property presentation: photo", widget: image }
+          - { name: presentationImageAlt, label: "Property presentation: photo description", widget: string }
+          - { name: presentationCaption, label: "Property presentation: photo caption", widget: string }
+          - { name: presentationEyebrow, label: "Property presentation: small label", widget: string }
+          - { name: presentationTitle, label: "Property presentation: heading", widget: string, hint: "Wrap words in *asterisks* to show them in gold italics" }
+          - { name: presentationLead, label: "Property presentation: large intro", widget: text }
+          - { name: presentationBody, label: "Property presentation: text (blank line between paragraphs)", widget: text }
+          - name: presentationAudiences
+            label: "Property presentation: who it's for"
+            widget: list
+            field: { name: audience, label: Audience, widget: string }
+          - { name: presentationPrimaryLabel, label: "Property presentation: main button text", widget: string }
+          - { name: presentationSecondaryLabel, label: "Property presentation: enquire button text", widget: string }
+
+          - { name: storyEyebrow, label: "Our story: small label", widget: string }
+          - { name: storyTitle, label: "Our story: heading", widget: string, hint: "Wrap words in *asterisks* to show them in gold italics. The portraits come from the Team list." }
+          - { name: storyLead, label: "Our story: large intro", widget: text }
+          - { name: storyBody, label: "Our story: text (blank line between paragraphs)", widget: text }
+          - { name: storyLinkLabel, label: "Our story: link text", widget: string }
+
+          - { name: reviewsEyebrow, label: "Reviews: small label", widget: string }
+          - { name: reviewsTitle, label: "Reviews: heading", widget: string, hint: "Wrap words in *asterisks* to show them in gold italics. The reviews come from the Reviews list." }
+          - { name: reviewsAllLabel, label: "Reviews: Google button text", widget: string }
+          - { name: reviewsFacebookLabel, label: "Reviews: Facebook link text", widget: string }
+
+          - { name: areasEyebrow, label: "Areas: small label", widget: string }
+          - { name: areasTitle, label: "Areas: heading", widget: string, hint: "Wrap words in *asterisks* to show them in gold italics. The towns are in Site settings." }
+          - { name: areasIntro, label: "Areas: intro", widget: text }
+          - { name: areasClosing, label: "Areas: closing line", widget: text }
+
+      - name: services_page
+        label: "Services page"
+        file: src/content/pages/services.json
+        fields:
+          - { name: metaTitle, label: "SEO: page title (browser tab and Google)", widget: string, hint: "Around 50 to 60 characters. Put the service and area first, e.g. Garden Maintenance in Richmond | Green & Noble" }
+          - { name: metaDescription, label: "SEO: description (Google search results)", widget: text, hint: "Around 140 to 160 characters. A plain summary that makes people want to click." }
+          - { name: shareImage, label: "SEO: share picture (optional)", widget: image, required: false, hint: "Shown when the page is shared on WhatsApp, Facebook or LinkedIn. Leave empty to use the top photo." }
+          - { name: heroImage, label: "Hero: photo", widget: image }
+          - { name: heroImageAlt, label: "Hero: photo description", widget: string }
+          - { name: heroEyebrow, label: "Hero: small label", widget: string }
+          - { name: heroTitle, label: "Hero: heading", widget: string, hint: "Wrap words in *asterisks* to show them in gold italics" }
+          - { name: heroTagline, label: "Hero: sub-heading", widget: string, required: false, hint: "Wrap words in *asterisks* to show them in gold italics" }
+          - name: intro
+            label: "Sections above the service cards"
+            label_singular: section
+            widget: list
+            required: false
+            hint: "Add, remove and drag to reorder. Backgrounds alternate automatically."
+            types:
+              - name: text
+                label: Text
+                widget: object
+                summary: "{{title}}{{lead}}"
+                fields:
+                  - { name: eyebrow, label: "Small label", widget: string, required: false }
+                  - { name: title, label: Heading, widget: string, required: false, hint: "Wrap words in *asterisks* to show them in gold italics" }
+                  - { name: lead, label: "Large opening paragraph", widget: text, required: false }
+                  - { name: body, label: "Text (blank line between paragraphs)", widget: text, required: false }
+              - name: list
+                label: "List of services"
+                widget: object
+                summary: "{{title}}{{itemsLabel}}"
+                fields:
+                  - { name: eyebrow, label: "Small label", widget: string, required: false }
+                  - { name: title, label: Heading, widget: string, required: false, hint: "Wrap words in *asterisks* to show them in gold italics. Leave the heading and intro empty to carry on from the section above." }
+                  - { name: lead, label: "Large opening paragraph", widget: text, required: false }
+                  - { name: body, label: "Intro text (blank line between paragraphs)", widget: text, required: false }
+                  - { name: image, label: Photo, widget: image, required: false }
+                  - { name: imageAlt, label: "Photo description", widget: string, required: false }
+                  - { name: itemsLabel, label: "Label above the list", widget: string, required: false, hint: "e.g. Our services include" }
+                  - name: items
+                    label: Items
+                    widget: list
+                    summary: "{{title}}"
+                    fields:
+                      - { name: title, label: Item, widget: string }
+                      - { name: text, label: "Description (optional)", widget: text, required: false, hint: "Items with descriptions show as a two-column list" }
+                  - { name: outro, label: "Text after the list", widget: text, required: false }
+              - name: profile
+                label: "Team member profile"
+                widget: object
+                summary: "{{title}}"
+                fields:
+                  - { name: eyebrow, label: "Small label", widget: string, required: false }
+                  - { name: title, label: Heading, widget: string, hint: "Wrap words in *asterisks* to show them in gold italics" }
+                  - { name: subtitle, label: "Sub-heading", widget: string, required: false }
+                  - { name: person, label: Person, widget: relation, collection: team, value_field: "{{slug}}", search_fields: [name], display_fields: [name] }
+                  - { name: body, label: "Text (blank line between paragraphs)", widget: text }
+              - name: points
+                label: "Why choose us points"
+                widget: object
+                summary: "{{title}}"
+                fields:
+                  - { name: eyebrow, label: "Small label", widget: string, required: false }
+                  - { name: title, label: Heading, widget: string, hint: "Wrap words in *asterisks* to show them in gold italics" }
+                  - name: items
+                    label: Points
+                    widget: list
+                    summary: "{{title}}"
+                    fields:
+                      - { name: title, label: Title, widget: string }
+                      - { name: text, label: Text, widget: text, required: false }
+              - name: gallery
+                label: "Photo gallery"
+                widget: object
+                summary: "{{title}}"
+                fields:
+                  - { name: eyebrow, label: "Small label", widget: string, required: false }
+                  - { name: title, label: Heading, widget: string, required: false, hint: "Wrap words in *asterisks* to show them in gold italics" }
+                  - name: images
+                    label: Photos
+                    widget: list
+                    summary: "{{caption}}"
+                    fields:
+                      - { name: image, label: Photo, widget: image }
+                      - { name: alt, label: "Photo description", widget: string }
+                      - { name: caption, label: "Caption (optional)", widget: string, required: false }
+              - name: faq
+                label: "Questions & answers"
+                widget: object
+                summary: "{{title}}"
+                fields:
+                  - { name: eyebrow, label: "Small label", widget: string, required: false }
+                  - { name: title, label: Heading, widget: string, hint: "Wrap words in *asterisks* to show them in gold italics" }
+                  - name: items
+                    label: Questions
+                    widget: list
+                    summary: "{{title}}"
+                    fields:
+                      - { name: title, label: Question, widget: string }
+                      - { name: text, label: "Answer (blank line between paragraphs)", widget: text }
+          - { name: cardsEyebrow, label: "Cards: small label", widget: string }
+          - { name: cardsTitle, label: "Cards: heading", widget: string, hint: "Wrap words in *asterisks* to show them in gold italics. Every service in the Services list gets a card." }
+          - name: sections
+            label: "Sections below the service cards"
+            label_singular: section
+            widget: list
+            required: false
+            hint: "Add, remove and drag to reorder. Backgrounds alternate automatically."
+            types:
+              - name: text
+                label: Text
+                widget: object
+                summary: "{{title}}{{lead}}"
+                fields:
+                  - { name: eyebrow, label: "Small label", widget: string, required: false }
+                  - { name: title, label: Heading, widget: string, required: false, hint: "Wrap words in *asterisks* to show them in gold italics" }
+                  - { name: lead, label: "Large opening paragraph", widget: text, required: false }
+                  - { name: body, label: "Text (blank line between paragraphs)", widget: text, required: false }
+              - name: list
+                label: "List of services"
+                widget: object
+                summary: "{{title}}{{itemsLabel}}"
+                fields:
+                  - { name: eyebrow, label: "Small label", widget: string, required: false }
+                  - { name: title, label: Heading, widget: string, required: false, hint: "Wrap words in *asterisks* to show them in gold italics. Leave the heading and intro empty to carry on from the section above." }
+                  - { name: lead, label: "Large opening paragraph", widget: text, required: false }
+                  - { name: body, label: "Intro text (blank line between paragraphs)", widget: text, required: false }
+                  - { name: image, label: Photo, widget: image, required: false }
+                  - { name: imageAlt, label: "Photo description", widget: string, required: false }
+                  - { name: itemsLabel, label: "Label above the list", widget: string, required: false, hint: "e.g. Our services include" }
+                  - name: items
+                    label: Items
+                    widget: list
+                    summary: "{{title}}"
+                    fields:
+                      - { name: title, label: Item, widget: string }
+                      - { name: text, label: "Description (optional)", widget: text, required: false, hint: "Items with descriptions show as a two-column list" }
+                  - { name: outro, label: "Text after the list", widget: text, required: false }
+              - name: profile
+                label: "Team member profile"
+                widget: object
+                summary: "{{title}}"
+                fields:
+                  - { name: eyebrow, label: "Small label", widget: string, required: false }
+                  - { name: title, label: Heading, widget: string, hint: "Wrap words in *asterisks* to show them in gold italics" }
+                  - { name: subtitle, label: "Sub-heading", widget: string, required: false }
+                  - { name: person, label: Person, widget: relation, collection: team, value_field: "{{slug}}", search_fields: [name], display_fields: [name] }
+                  - { name: body, label: "Text (blank line between paragraphs)", widget: text }
+              - name: points
+                label: "Why choose us points"
+                widget: object
+                summary: "{{title}}"
+                fields:
+                  - { name: eyebrow, label: "Small label", widget: string, required: false }
+                  - { name: title, label: Heading, widget: string, hint: "Wrap words in *asterisks* to show them in gold italics" }
+                  - name: items
+                    label: Points
+                    widget: list
+                    summary: "{{title}}"
+                    fields:
+                      - { name: title, label: Title, widget: string }
+                      - { name: text, label: Text, widget: text, required: false }
+              - name: gallery
+                label: "Photo gallery"
+                widget: object
+                summary: "{{title}}"
+                fields:
+                  - { name: eyebrow, label: "Small label", widget: string, required: false }
+                  - { name: title, label: Heading, widget: string, required: false, hint: "Wrap words in *asterisks* to show them in gold italics" }
+                  - name: images
+                    label: Photos
+                    widget: list
+                    summary: "{{caption}}"
+                    fields:
+                      - { name: image, label: Photo, widget: image }
+                      - { name: alt, label: "Photo description", widget: string }
+                      - { name: caption, label: "Caption (optional)", widget: string, required: false }
+              - name: faq
+                label: "Questions & answers"
+                widget: object
+                summary: "{{title}}"
+                fields:
+                  - { name: eyebrow, label: "Small label", widget: string, required: false }
+                  - { name: title, label: Heading, widget: string, hint: "Wrap words in *asterisks* to show them in gold italics" }
+                  - name: items
+                    label: Questions
+                    widget: list
+                    summary: "{{title}}"
+                    fields:
+                      - { name: title, label: Question, widget: string }
+                      - { name: text, label: "Answer (blank line between paragraphs)", widget: text }
+
+      - name: our_work
+        label: "Our Work page"
+        file: src/content/pages/our-work.json
+        fields:
+          - { name: metaTitle, label: "SEO: page title (browser tab and Google)", widget: string, hint: "Around 50 to 60 characters. Put the service and area first, e.g. Garden Maintenance in Richmond | Green & Noble" }
+          - { name: metaDescription, label: "SEO: description (Google search results)", widget: text, hint: "Around 140 to 160 characters. A plain summary that makes people want to click." }
+          - { name: shareImage, label: "SEO: share picture (optional)", widget: image, required: false, hint: "Shown when the page is shared on WhatsApp, Facebook or LinkedIn. Leave empty to use the top photo." }
+          - { name: heroImage, label: "Hero: photo", widget: image }
+          - { name: heroImageAlt, label: "Hero: photo description", widget: string }
+          - { name: heroEyebrow, label: "Hero: small label", widget: string }
+          - { name: heroTitle, label: "Hero: heading", widget: string, hint: "Wrap words in *asterisks* to show them in gold italics" }
+          - { name: heroTagline, label: "Hero: sub-heading", widget: string, required: false, hint: "Wrap words in *asterisks* to show them in gold italics" }
+          - name: intro
+            label: "Sections above the gallery"
+            label_singular: section
+            widget: list
+            required: false
+            hint: "Add, remove and drag to reorder. Backgrounds alternate automatically."
+            types:
+              - name: text
+                label: Text
+                widget: object
+                summary: "{{title}}{{lead}}"
+                fields:
+                  - { name: eyebrow, label: "Small label", widget: string, required: false }
+                  - { name: title, label: Heading, widget: string, required: false, hint: "Wrap words in *asterisks* to show them in gold italics" }
+                  - { name: lead, label: "Large opening paragraph", widget: text, required: false }
+                  - { name: body, label: "Text (blank line between paragraphs)", widget: text, required: false }
+              - name: list
+                label: "List of services"
+                widget: object
+                summary: "{{title}}{{itemsLabel}}"
+                fields:
+                  - { name: eyebrow, label: "Small label", widget: string, required: false }
+                  - { name: title, label: Heading, widget: string, required: false, hint: "Wrap words in *asterisks* to show them in gold italics. Leave the heading and intro empty to carry on from the section above." }
+                  - { name: lead, label: "Large opening paragraph", widget: text, required: false }
+                  - { name: body, label: "Intro text (blank line between paragraphs)", widget: text, required: false }
+                  - { name: image, label: Photo, widget: image, required: false }
+                  - { name: imageAlt, label: "Photo description", widget: string, required: false }
+                  - { name: itemsLabel, label: "Label above the list", widget: string, required: false, hint: "e.g. Our services include" }
+                  - name: items
+                    label: Items
+                    widget: list
+                    summary: "{{title}}"
+                    fields:
+                      - { name: title, label: Item, widget: string }
+                      - { name: text, label: "Description (optional)", widget: text, required: false, hint: "Items with descriptions show as a two-column list" }
+                  - { name: outro, label: "Text after the list", widget: text, required: false }
+              - name: profile
+                label: "Team member profile"
+                widget: object
+                summary: "{{title}}"
+                fields:
+                  - { name: eyebrow, label: "Small label", widget: string, required: false }
+                  - { name: title, label: Heading, widget: string, hint: "Wrap words in *asterisks* to show them in gold italics" }
+                  - { name: subtitle, label: "Sub-heading", widget: string, required: false }
+                  - { name: person, label: Person, widget: relation, collection: team, value_field: "{{slug}}", search_fields: [name], display_fields: [name] }
+                  - { name: body, label: "Text (blank line between paragraphs)", widget: text }
+              - name: points
+                label: "Why choose us points"
+                widget: object
+                summary: "{{title}}"
+                fields:
+                  - { name: eyebrow, label: "Small label", widget: string, required: false }
+                  - { name: title, label: Heading, widget: string, hint: "Wrap words in *asterisks* to show them in gold italics" }
+                  - name: items
+                    label: Points
+                    widget: list
+                    summary: "{{title}}"
+                    fields:
+                      - { name: title, label: Title, widget: string }
+                      - { name: text, label: Text, widget: text, required: false }
+              - name: gallery
+                label: "Photo gallery"
+                widget: object
+                summary: "{{title}}"
+                fields:
+                  - { name: eyebrow, label: "Small label", widget: string, required: false }
+                  - { name: title, label: Heading, widget: string, required: false, hint: "Wrap words in *asterisks* to show them in gold italics" }
+                  - name: images
+                    label: Photos
+                    widget: list
+                    summary: "{{caption}}"
+                    fields:
+                      - { name: image, label: Photo, widget: image }
+                      - { name: alt, label: "Photo description", widget: string }
+                      - { name: caption, label: "Caption (optional)", widget: string, required: false }
+              - name: faq
+                label: "Questions & answers"
+                widget: object
+                summary: "{{title}}"
+                fields:
+                  - { name: eyebrow, label: "Small label", widget: string, required: false }
+                  - { name: title, label: Heading, widget: string, hint: "Wrap words in *asterisks* to show them in gold italics" }
+                  - name: items
+                    label: Questions
+                    widget: list
+                    summary: "{{title}}"
+                    fields:
+                      - { name: title, label: Question, widget: string }
+                      - { name: text, label: "Answer (blank line between paragraphs)", widget: text }
+          - { name: galleryEyebrow, label: "Gallery: small label", widget: string }
+          - { name: galleryTitle, label: "Gallery: heading", widget: string, hint: "Wrap words in *asterisks* to show them in gold italics. The projects come from the Before & after projects list." }
+          - { name: allLabel, label: "Gallery: label of the show-everything button", widget: string }
+          - name: sections
+            label: "Sections below the gallery"
+            label_singular: section
+            widget: list
+            required: false
+            hint: "Add, remove and drag to reorder. Backgrounds alternate automatically."
+            types:
+              - name: text
+                label: Text
+                widget: object
+                summary: "{{title}}{{lead}}"
+                fields:
+                  - { name: eyebrow, label: "Small label", widget: string, required: false }
+                  - { name: title, label: Heading, widget: string, required: false, hint: "Wrap words in *asterisks* to show them in gold italics" }
+                  - { name: lead, label: "Large opening paragraph", widget: text, required: false }
+                  - { name: body, label: "Text (blank line between paragraphs)", widget: text, required: false }
+              - name: list
+                label: "List of services"
+                widget: object
+                summary: "{{title}}{{itemsLabel}}"
+                fields:
+                  - { name: eyebrow, label: "Small label", widget: string, required: false }
+                  - { name: title, label: Heading, widget: string, required: false, hint: "Wrap words in *asterisks* to show them in gold italics. Leave the heading and intro empty to carry on from the section above." }
+                  - { name: lead, label: "Large opening paragraph", widget: text, required: false }
+                  - { name: body, label: "Intro text (blank line between paragraphs)", widget: text, required: false }
+                  - { name: image, label: Photo, widget: image, required: false }
+                  - { name: imageAlt, label: "Photo description", widget: string, required: false }
+                  - { name: itemsLabel, label: "Label above the list", widget: string, required: false, hint: "e.g. Our services include" }
+                  - name: items
+                    label: Items
+                    widget: list
+                    summary: "{{title}}"
+                    fields:
+                      - { name: title, label: Item, widget: string }
+                      - { name: text, label: "Description (optional)", widget: text, required: false, hint: "Items with descriptions show as a two-column list" }
+                  - { name: outro, label: "Text after the list", widget: text, required: false }
+              - name: profile
+                label: "Team member profile"
+                widget: object
+                summary: "{{title}}"
+                fields:
+                  - { name: eyebrow, label: "Small label", widget: string, required: false }
+                  - { name: title, label: Heading, widget: string, hint: "Wrap words in *asterisks* to show them in gold italics" }
+                  - { name: subtitle, label: "Sub-heading", widget: string, required: false }
+                  - { name: person, label: Person, widget: relation, collection: team, value_field: "{{slug}}", search_fields: [name], display_fields: [name] }
+                  - { name: body, label: "Text (blank line between paragraphs)", widget: text }
+              - name: points
+                label: "Why choose us points"
+                widget: object
+                summary: "{{title}}"
+                fields:
+                  - { name: eyebrow, label: "Small label", widget: string, required: false }
+                  - { name: title, label: Heading, widget: string, hint: "Wrap words in *asterisks* to show them in gold italics" }
+                  - name: items
+                    label: Points
+                    widget: list
+                    summary: "{{title}}"
+                    fields:
+                      - { name: title, label: Title, widget: string }
+                      - { name: text, label: Text, widget: text, required: false }
+              - name: gallery
+                label: "Photo gallery"
+                widget: object
+                summary: "{{title}}"
+                fields:
+                  - { name: eyebrow, label: "Small label", widget: string, required: false }
+                  - { name: title, label: Heading, widget: string, required: false, hint: "Wrap words in *asterisks* to show them in gold italics" }
+                  - name: images
+                    label: Photos
+                    widget: list
+                    summary: "{{caption}}"
+                    fields:
+                      - { name: image, label: Photo, widget: image }
+                      - { name: alt, label: "Photo description", widget: string }
+                      - { name: caption, label: "Caption (optional)", widget: string, required: false }
+              - name: faq
+                label: "Questions & answers"
+                widget: object
+                summary: "{{title}}"
+                fields:
+                  - { name: eyebrow, label: "Small label", widget: string, required: false }
+                  - { name: title, label: Heading, widget: string, hint: "Wrap words in *asterisks* to show them in gold italics" }
+                  - name: items
+                    label: Questions
+                    widget: list
+                    summary: "{{title}}"
+                    fields:
+                      - { name: title, label: Question, widget: string }
+                      - { name: text, label: "Answer (blank line between paragraphs)", widget: text }
+
+      - name: about
+        label: About us
+        file: src/content/pages/about.json
+        fields:
+          - { name: metaTitle, label: "SEO: page title (browser tab and Google)", widget: string, hint: "Around 50 to 60 characters. Put the service and area first, e.g. Garden Maintenance in Richmond | Green & Noble" }
+          - { name: metaDescription, label: "SEO: description (Google search results)", widget: text, hint: "Around 140 to 160 characters. A plain summary that makes people want to click." }
+          - { name: shareImage, label: "SEO: share picture (optional)", widget: image, required: false, hint: "Shown when the page is shared on WhatsApp, Facebook or LinkedIn. Leave empty to use the top photo." }
+          - { name: heroImage, label: "Hero: photo", widget: image }
+          - { name: heroImageAlt, label: "Hero: photo description", widget: string }
+          - { name: heroEyebrow, label: "Hero: small label", widget: string }
+          - { name: heroTitle, label: "Hero: heading", widget: string, hint: "Wrap words in *asterisks* to show them in gold italics" }
+          - { name: heroTagline, label: "Hero: sub-heading", widget: string, required: false, hint: "Wrap words in *asterisks* to show them in gold italics" }
+          - { name: storyEyebrow, label: "Our story: small label", widget: string }
+          - { name: storyTitle, label: "Our story: heading", widget: string, hint: "Wrap words in *asterisks* to show them in gold italics. The portraits come from the Team list (people ticked Founder)." }
+          - { name: storyLead, label: "Our story: large opening paragraph", widget: text }
+          - { name: storyBody, label: "Our story: text (blank line between paragraphs)", widget: text }
+          - name: sections
+            label: "Sections below Our Story"
+            label_singular: section
+            widget: list
+            required: false
+            hint: "Add, remove and drag to reorder. Backgrounds alternate automatically."
+            types:
+              - name: text
+                label: Text
+                widget: object
+                summary: "{{title}}{{lead}}"
+                fields:
+                  - { name: eyebrow, label: "Small label", widget: string, required: false }
+                  - { name: title, label: Heading, widget: string, required: false, hint: "Wrap words in *asterisks* to show them in gold italics" }
+                  - { name: lead, label: "Large opening paragraph", widget: text, required: false }
+                  - { name: body, label: "Text (blank line between paragraphs)", widget: text, required: false }
+              - name: list
+                label: "List of services"
+                widget: object
+                summary: "{{title}}{{itemsLabel}}"
+                fields:
+                  - { name: eyebrow, label: "Small label", widget: string, required: false }
+                  - { name: title, label: Heading, widget: string, required: false, hint: "Wrap words in *asterisks* to show them in gold italics. Leave the heading and intro empty to carry on from the section above." }
+                  - { name: lead, label: "Large opening paragraph", widget: text, required: false }
+                  - { name: body, label: "Intro text (blank line between paragraphs)", widget: text, required: false }
+                  - { name: image, label: Photo, widget: image, required: false }
+                  - { name: imageAlt, label: "Photo description", widget: string, required: false }
+                  - { name: itemsLabel, label: "Label above the list", widget: string, required: false, hint: "e.g. Our services include" }
+                  - name: items
+                    label: Items
+                    widget: list
+                    summary: "{{title}}"
+                    fields:
+                      - { name: title, label: Item, widget: string }
+                      - { name: text, label: "Description (optional)", widget: text, required: false, hint: "Items with descriptions show as a two-column list" }
+                  - { name: outro, label: "Text after the list", widget: text, required: false }
+              - name: profile
+                label: "Team member profile"
+                widget: object
+                summary: "{{title}}"
+                fields:
+                  - { name: eyebrow, label: "Small label", widget: string, required: false }
+                  - { name: title, label: Heading, widget: string, hint: "Wrap words in *asterisks* to show them in gold italics" }
+                  - { name: subtitle, label: "Sub-heading", widget: string, required: false }
+                  - { name: person, label: Person, widget: relation, collection: team, value_field: "{{slug}}", search_fields: [name], display_fields: [name] }
+                  - { name: body, label: "Text (blank line between paragraphs)", widget: text }
+              - name: points
+                label: "Why choose us points"
+                widget: object
+                summary: "{{title}}"
+                fields:
+                  - { name: eyebrow, label: "Small label", widget: string, required: false }
+                  - { name: title, label: Heading, widget: string, hint: "Wrap words in *asterisks* to show them in gold italics" }
+                  - name: items
+                    label: Points
+                    widget: list
+                    summary: "{{title}}"
+                    fields:
+                      - { name: title, label: Title, widget: string }
+                      - { name: text, label: Text, widget: text, required: false }
+              - name: gallery
+                label: "Photo gallery"
+                widget: object
+                summary: "{{title}}"
+                fields:
+                  - { name: eyebrow, label: "Small label", widget: string, required: false }
+                  - { name: title, label: Heading, widget: string, required: false, hint: "Wrap words in *asterisks* to show them in gold italics" }
+                  - name: images
+                    label: Photos
+                    widget: list
+                    summary: "{{caption}}"
+                    fields:
+                      - { name: image, label: Photo, widget: image }
+                      - { name: alt, label: "Photo description", widget: string }
+                      - { name: caption, label: "Caption (optional)", widget: string, required: false }
+              - name: faq
+                label: "Questions & answers"
+                widget: object
+                summary: "{{title}}"
+                fields:
+                  - { name: eyebrow, label: "Small label", widget: string, required: false }
+                  - { name: title, label: Heading, widget: string, hint: "Wrap words in *asterisks* to show them in gold italics" }
+                  - name: items
+                    label: Questions
+                    widget: list
+                    summary: "{{title}}"
+                    fields:
+                      - { name: title, label: Question, widget: string }
+                      - { name: text, label: "Answer (blank line between paragraphs)", widget: text }
+
+      - name: contact
+        label: Contact
+        file: src/content/pages/contact.json
+        fields:
+          - { name: metaTitle, label: "SEO: page title (browser tab and Google)", widget: string, hint: "Around 50 to 60 characters. Put the service and area first, e.g. Garden Maintenance in Richmond | Green & Noble" }
+          - { name: metaDescription, label: "SEO: description (Google search results)", widget: text, hint: "Around 140 to 160 characters. A plain summary that makes people want to click." }
+          - { name: shareImage, label: "SEO: share picture (optional)", widget: image, required: false, hint: "Shown when the page is shared on WhatsApp, Facebook or LinkedIn. Leave empty to use the top photo." }
+          - { name: heroEyebrow, label: "Banner: small label", widget: string }
+          - { name: heroTitle, label: "Banner: heading", widget: string, hint: "Wrap words in *asterisks* to show them in gold italics. The form, phone and email are in Site settings." }
+          - { name: heroLede, label: "Banner: intro", widget: text, required: false }
+
+  - name: services
+    label: Services
+    icon: yard
+    folder: src/content/services
+    create: true
+    format: frontmatter
+    extension: md
+    slug: "{{slug}}"
+    # The Reorder button in the list sets each entry's `order` (no form field needed).
+    reorder: true
+    thumbnail: image
+    fields:
+      - { name: title, label: Title, widget: string }
+      - { name: summary, label: "Short description (cards and page intro)", widget: text }
+      - { name: image, label: "Card photo", widget: image, required: false }
+      - { name: imageAlt, label: "Card photo description", widget: string, required: false }
+      - { name: featured, label: "Featured on the homepage", widget: boolean, default: false, hint: "Featured services get a card with a photo; the others are listed under We also provide" }
+      - { name: metaTitle, label: "SEO: page title (optional)", widget: string, required: false, hint: "Leave empty for: <title> in Surrey & South West London | Green & Noble. Around 50 to 60 characters." }
+      - { name: link, label: "Send visitors to another page instead (optional)", widget: string, required: false, hint: "e.g. /property-presentation/. Leave empty for the service's own page." }
+      - { name: metaDescription, label: "SEO: description (Google search results)", widget: text, hint: "Around 140 to 160 characters. A plain summary that makes people want to click." }
+      - { name: shareImage, label: "SEO: share picture (optional)", widget: image, required: false, hint: "Shown when the page is shared on WhatsApp, Facebook or LinkedIn. Leave empty to use the top photo." }
+      - { name: heroImage, label: "Page: hero photo (optional)", widget: image, required: false, hint: "Leave empty to use the card photo" }
+      - { name: heroImageAlt, label: "Page: hero photo description", widget: string, required: false }
+      - { name: heroTitle, label: "Page: heading (optional)", widget: string, required: false, hint: "Wrap words in *asterisks* to show them in gold italics. Leave empty to use the title." }
+      - { name: tagline, label: "Page: sub-heading (optional)", widget: string, required: false, hint: "Wrap words in *asterisks* to show them in gold italics" }
+      - name: sections
+        label: "Page: sections"
+        label_singular: section
+        widget: list
+        required: false
+        hint: "Add, remove and drag to reorder. Backgrounds alternate automatically."
+        types:
+          - name: text
+            label: Text
+            widget: object
+            summary: "{{title}}{{lead}}"
+            fields:
+              - { name: eyebrow, label: "Small label", widget: string, required: false }
+              - { name: title, label: Heading, widget: string, required: false, hint: "Wrap words in *asterisks* to show them in gold italics" }
+              - { name: lead, label: "Large opening paragraph", widget: text, required: false }
+              - { name: body, label: "Text (blank line between paragraphs)", widget: text, required: false }
+          - name: list
+            label: "List of services"
+            widget: object
+            summary: "{{title}}{{itemsLabel}}"
+            fields:
+              - { name: eyebrow, label: "Small label", widget: string, required: false }
+              - { name: title, label: Heading, widget: string, required: false, hint: "Wrap words in *asterisks* to show them in gold italics. Leave the heading and intro empty to carry on from the section above." }
+              - { name: lead, label: "Large opening paragraph", widget: text, required: false }
+              - { name: body, label: "Intro text (blank line between paragraphs)", widget: text, required: false }
+              - { name: image, label: Photo, widget: image, required: false }
+              - { name: imageAlt, label: "Photo description", widget: string, required: false }
+              - { name: itemsLabel, label: "Label above the list", widget: string, required: false, hint: "e.g. Our services include" }
+              - name: items
+                label: Items
+                widget: list
+                summary: "{{title}}"
+                fields:
+                  - { name: title, label: Item, widget: string }
+                  - { name: text, label: "Description (optional)", widget: text, required: false, hint: "Items with descriptions show as a two-column list" }
+              - { name: outro, label: "Text after the list", widget: text, required: false }
+          - name: profile
+            label: "Team member profile"
+            widget: object
+            summary: "{{title}}"
+            fields:
+              - { name: eyebrow, label: "Small label", widget: string, required: false }
+              - { name: title, label: Heading, widget: string, hint: "Wrap words in *asterisks* to show them in gold italics" }
+              - { name: subtitle, label: "Sub-heading", widget: string, required: false }
+              - { name: person, label: Person, widget: relation, collection: team, value_field: "{{slug}}", search_fields: [name], display_fields: [name] }
+              - { name: body, label: "Text (blank line between paragraphs)", widget: text }
+          - name: points
+            label: "Why choose us points"
+            widget: object
+            summary: "{{title}}"
+            fields:
+              - { name: eyebrow, label: "Small label", widget: string, required: false }
+              - { name: title, label: Heading, widget: string, hint: "Wrap words in *asterisks* to show them in gold italics" }
+              - name: items
+                label: Points
+                widget: list
+                summary: "{{title}}"
+                fields:
+                  - { name: title, label: Title, widget: string }
+                  - { name: text, label: Text, widget: text, required: false }
+          - name: gallery
+            label: "Photo gallery"
+            widget: object
+            summary: "{{title}}"
+            fields:
+              - { name: eyebrow, label: "Small label", widget: string, required: false }
+              - { name: title, label: Heading, widget: string, required: false, hint: "Wrap words in *asterisks* to show them in gold italics" }
+              - name: images
+                label: Photos
+                widget: list
+                summary: "{{caption}}"
+                fields:
+                  - { name: image, label: Photo, widget: image }
+                  - { name: alt, label: "Photo description", widget: string }
+                  - { name: caption, label: "Caption (optional)", widget: string, required: false }
+          - name: faq
+            label: "Questions & answers"
+            widget: object
+            summary: "{{title}}"
+            fields:
+              - { name: eyebrow, label: "Small label", widget: string, required: false }
+              - { name: title, label: Heading, widget: string, hint: "Wrap words in *asterisks* to show them in gold italics" }
+              - name: items
+                label: Questions
+                widget: list
+                summary: "{{title}}"
+                fields:
+                  - { name: title, label: Question, widget: string }
+                  - { name: text, label: "Answer (blank line between paragraphs)", widget: text }
+      - name: projectCategory
+        label: "Page: before & after projects to show"
+        widget: select
+        required: false
+        hint: "Projects in this gallery category appear on the page"
+        options: ["Garden Transformations", "Lawn Care & Renovation", "Garden Clearances", "Planting & Soft Landscaping", "Hedge & Tree Services", "Patios & Landscaping", "Exterior Cleaning", "Property Presentation"]
+
+  - name: projects
+    label: "Before & after projects"
+    label_singular: project
+    icon: compare
+    folder: src/content/projects
+    create: true
+    format: frontmatter
+    extension: md
+    slug: "{{slug}}"
+    reorder: true
+    thumbnail: after
+    summary: "{{service}}, {{place}}"
+    fields:
+      - { name: title, label: "Short description (for screen readers)", widget: string, hint: "e.g. Garden clearance" }
+      - { name: service, label: "Service label (small gold text on the tab)", widget: string }
+      - { name: place, label: "Place", widget: string, hint: "e.g. Claygate" }
+      - name: category
+        label: "Gallery category"
+        widget: select
+        options: ["Garden Transformations", "Lawn Care & Renovation", "Garden Clearances", "Planting & Soft Landscaping", "Hedge & Tree Services", "Patios & Landscaping", "Exterior Cleaning", "Property Presentation"]
+      - { name: before, label: "Before photo", widget: image }
+      - { name: after, label: "After photo", widget: image, hint: "Take both photos from the same angle if possible" }
+      - { name: beforeLabel, label: "Label on the first photo", widget: string, default: Before, hint: "Before, or During for a progress shot" }
+      - { name: description, label: "Description (shown in the gallery)", widget: text, required: false, hint: "A line or two about the work" }
+      - name: photos
+        label: "More photos (progress shots, other angles)"
+        label_singular: photo
+        widget: list
+        required: false
+        summary: "{{label}} {{caption}}"
+        fields:
+          - { name: image, label: Photo, widget: image }
+          - { name: label, label: "Label (Before, During or After)", widget: string, required: false }
+          - { name: caption, label: "Caption (optional)", widget: string, required: false }
+      - { name: showOnHome, label: "Show on homepage", widget: boolean, default: false }
+
+  - name: areas
+    label: "Area pages"
+    label_singular: "area page"
+    icon: location_on
+    folder: src/content/areas
+    create: true
+    format: frontmatter
+    extension: md
+    slug: "{{slug}}"
+    reorder: true
+    summary: "{{title}}"
+    fields:
+      - { name: title, label: "Area name", widget: string, hint: "e.g. Kensington. If the same name is in the areas list (Site settings), it becomes a link to this page." }
+      - { name: metaTitle, label: "SEO: page title (browser tab and Google)", widget: string, hint: "Around 50 to 60 characters, e.g. Garden Maintenance in Richmond | Green & Noble" }
+      - { name: metaDescription, label: "SEO: description (Google search results)", widget: text, hint: "Around 140 to 160 characters." }
+      - { name: shareImage, label: "SEO: share picture (optional)", widget: image, required: false }
+      - { name: heroImage, label: "Hero: photo", widget: image }
+      - { name: heroImageAlt, label: "Hero: photo description", widget: string }
+      - { name: heroEyebrow, label: "Hero: small label", widget: string }
+      - { name: heroTitle, label: "Hero: heading", widget: string, hint: "Wrap words in *asterisks* to show them in gold italics. Put the main search phrase here, e.g. Garden Maintenance *in Richmond*" }
+      - { name: tagline, label: "Hero: sub-heading", widget: string, required: false, hint: "Wrap words in *asterisks* to show them in gold italics" }
+      - { name: intro, label: "Hero: intro", widget: text, required: false }
+      - name: sections
+        label: "Sections"
+        label_singular: section
+        widget: list
+        required: false
+        hint: "Add, remove and drag to reorder. Backgrounds alternate automatically."
+        types:
+          - name: text
+            label: Text
+            widget: object
+            summary: "{{title}}{{lead}}"
+            fields:
+              - { name: eyebrow, label: "Small label", widget: string, required: false }
+              - { name: title, label: Heading, widget: string, required: false, hint: "Wrap words in *asterisks* to show them in gold italics" }
+              - { name: lead, label: "Large opening paragraph", widget: text, required: false }
+              - { name: body, label: "Text (blank line between paragraphs)", widget: text, required: false }
+          - name: list
+            label: "List of services"
+            widget: object
+            summary: "{{title}}{{itemsLabel}}"
+            fields:
+              - { name: eyebrow, label: "Small label", widget: string, required: false }
+              - { name: title, label: Heading, widget: string, required: false, hint: "Wrap words in *asterisks* to show them in gold italics. Leave the heading and intro empty to carry on from the section above." }
+              - { name: lead, label: "Large opening paragraph", widget: text, required: false }
+              - { name: body, label: "Intro text (blank line between paragraphs)", widget: text, required: false }
+              - { name: image, label: Photo, widget: image, required: false }
+              - { name: imageAlt, label: "Photo description", widget: string, required: false }
+              - { name: itemsLabel, label: "Label above the list", widget: string, required: false, hint: "e.g. Our services include" }
+              - name: items
+                label: Items
+                widget: list
+                summary: "{{title}}"
+                fields:
+                  - { name: title, label: Item, widget: string }
+                  - { name: text, label: "Description (optional)", widget: text, required: false, hint: "Items with descriptions show as a two-column list" }
+              - { name: outro, label: "Text after the list", widget: text, required: false }
+          - name: profile
+            label: "Team member profile"
+            widget: object
+            summary: "{{title}}"
+            fields:
+              - { name: eyebrow, label: "Small label", widget: string, required: false }
+              - { name: title, label: Heading, widget: string, hint: "Wrap words in *asterisks* to show them in gold italics" }
+              - { name: subtitle, label: "Sub-heading", widget: string, required: false }
+              - { name: person, label: Person, widget: relation, collection: team, value_field: "{{slug}}", search_fields: [name], display_fields: [name] }
+              - { name: body, label: "Text (blank line between paragraphs)", widget: text }
+          - name: points
+            label: "Why choose us points"
+            widget: object
+            summary: "{{title}}"
+            fields:
+              - { name: eyebrow, label: "Small label", widget: string, required: false }
+              - { name: title, label: Heading, widget: string, hint: "Wrap words in *asterisks* to show them in gold italics" }
+              - name: items
+                label: Points
+                widget: list
+                summary: "{{title}}"
+                fields:
+                  - { name: title, label: Title, widget: string }
+                  - { name: text, label: Text, widget: text, required: false }
+          - name: gallery
+            label: "Photo gallery"
+            widget: object
+            summary: "{{title}}"
+            fields:
+              - { name: eyebrow, label: "Small label", widget: string, required: false }
+              - { name: title, label: Heading, widget: string, required: false, hint: "Wrap words in *asterisks* to show them in gold italics" }
+              - name: images
+                label: Photos
+                widget: list
+                summary: "{{caption}}"
+                fields:
+                  - { name: image, label: Photo, widget: image }
+                  - { name: alt, label: "Photo description", widget: string }
+                  - { name: caption, label: "Caption (optional)", widget: string, required: false }
+          - name: faq
+            label: "Questions & answers"
+            widget: object
+            summary: "{{title}}"
+            fields:
+              - { name: eyebrow, label: "Small label", widget: string, required: false }
+              - { name: title, label: Heading, widget: string, hint: "Wrap words in *asterisks* to show them in gold italics" }
+              - name: items
+                label: Questions
+                widget: list
+                summary: "{{title}}"
+                fields:
+                  - { name: title, label: Question, widget: string }
+                  - { name: text, label: "Answer (blank line between paragraphs)", widget: text }
+      - name: projectCategory
+        label: "Before & after projects to show"
+        widget: select
+        required: false
+        options: ["Garden Transformations", "Lawn Care & Renovation", "Garden Clearances", "Planting & Soft Landscaping", "Hedge & Tree Services", "Patios & Landscaping", "Exterior Cleaning", "Property Presentation"]
+
+  - name: reviews
+    label: Reviews
+    icon: format_quote
+    folder: src/content/reviews
+    create: true
+    format: frontmatter
+    extension: md
+    slug: "{{slug}}"
+    reorder: true
+    summary: "{{name}}"
+    fields:
+      - { name: published, label: "Show on website", widget: boolean, default: true, hint: "Untick to hide this review without deleting it" }
+      - { name: quote, label: "Review text", widget: text, hint: "Copy it word for word from Google. Leave a blank line between paragraphs; the first is shown large." }
+      - { name: name, label: "Reviewer's name", widget: string }
+      - { name: link, label: "Link to the review on Google", widget: string, required: false }
+
+  - name: team
+    label: Team
+    label_singular: person
+    icon: group
+    folder: src/content/team
+    create: true
+    format: frontmatter
+    extension: md
+    slug: "{{slug}}"
+    reorder: true
+    thumbnail: photo
+    summary: "{{name}}, {{role}}"
+    fields:
+      - { name: name, label: Name, widget: string }
+      - { name: role, label: Role, widget: string }
+      - { name: photo, label: "Portrait (upright)", widget: image, required: false }
+      - { name: photoAlt, label: "Portrait description", widget: string, required: false }
+      - { name: founder, label: "Founder (shown on the homepage)", widget: boolean, default: false }
+
+  - name: legal
+    label: Legal
+    icon: gavel
+    label_singular: Legal page
+    folder: src/content/legal
+    create: true
+    format: frontmatter
+    extension: md
+    # Editable: the pencil next to the title renames the page's web address.
+    # Once a site is live, changing it breaks links to the old address.
+    slug:
+      template: "{{slug}}"
+      editable: true
+    reorder: true
+    fields:
+      - { name: title, label: Title, widget: string, hint: "Also used as the footer link text" }
+      - { name: metaTitle, label: "SEO: page title (optional)", widget: string, required: false, hint: "Leave empty for: <title> | Green & Noble" }
+      - { name: metaDescription, label: "SEO: description (Google search results)", widget: text }
+      - { name: body, label: "Policy text", widget: markdown }
+
+  - name: settings
+    label: Site settings
+    icon: settings
+    files:
+      - name: site
+        label: Site settings
+        file: src/content/settings/site.json
+        fields:
+          - { name: phoneDisplay, label: "Phone number (as shown)", widget: string }
+          - { name: phoneHref, label: "Phone link", widget: string, hint: "tel: then the number in international format, e.g. tel:+447502047000" }
+          - { name: whatsappHref, label: "WhatsApp link", widget: string, hint: "e.g. https://wa.me/447502047000" }
+          - { name: email, label: "Email address", widget: string }
+          - { name: googleReviewsUrl, label: "Google reviews link", widget: string }
+          - { name: facebookUrl, label: "Facebook link", widget: string }
+          - { name: instagramUrl, label: "Instagram link", widget: string }
+          - name: credentials
+            label: Credentials
+            widget: list
+            summary: "{{short}}"
+            fields:
+              - { name: short, label: "Short (strip under the homepage photo)", widget: string }
+              - { name: long, label: "Full (footer)", widget: string }
+          - { name: companyNumber, label: "Company number", widget: string, required: false }
+          - { name: registeredOffice, label: "Registered office", widget: string, required: false }
+          - name: areas
+            label: "Areas we cover"
+            widget: list
+            summary: "{{name}}"
+            fields:
+              - { name: name, label: "County / area", widget: string }
+              - name: towns
+                label: Towns
+                widget: list
+                required: false
+                field: { name: town, label: Town, widget: string }
+              - { name: more, label: "Text after the towns (optional)", widget: string, required: false, hint: "e.g. and surrounding areas" }
+          - name: footerAreas
+            label: "Areas listed in the footer"
+            widget: list
+            field: { name: area, label: Area, widget: string }
+          - { name: quoteEyebrow, label: "Quotation form: small label", widget: string }
+          - { name: quoteTitle, label: "Quotation form: heading", widget: string, hint: "Wrap words in *asterisks* to show them in gold italics" }
+          - { name: quoteBody, label: "Quotation form: text (blank line between paragraphs)", widget: text }
+          - { name: uploadTitle, label: "Quotation form: photo upload text", widget: string }
+          - { name: uploadNote, label: "Quotation form: photo upload note", widget: string }
+          - { name: submitLabel, label: "Quotation form: send button text", widget: string }
+          - { name: thanksTitle, label: "Quotation form: thank-you heading", widget: string }
+          - { name: thanksBody, label: "Quotation form: thank-you text", widget: text }
+          - { name: formEndpoint, label: "Quotation form: sending address (set up by Sly Design)", widget: string, required: false, hint: "Leave as it is. If empty, the form asks visitors to call or email instead." }
+          - name: footerScripts
+            label: "Footer scripts"
+            label_singular: "script"
+            widget: list
+            required: false
+            summary: "{{name}}"
+            hint: "Extra code that runs on every page of the website, such as a feedback widget, live chat or a marketing tracking code. Only paste code from services you trust. For Google Analytics, use the Google Analytics ID field below instead."
+            fields:
+              - { name: name, label: "Name (for your reference)", widget: string }
+              - { name: code, label: "Code", widget: code, default_language: html, output_code_only: true, allow_language_selection: false }
+              - { name: enabled, label: "Switched on", widget: boolean, default: false }
+              - { name: needsConsent, label: "Only load after cookie consent", widget: boolean, default: true, hint: "Leave on for anything that tracks visitors (analytics, ads, heatmaps, chat widgets that set cookies). Turn off only for scripts that set no cookies." }
+          - { name: analyticsId, label: "Google Analytics ID", widget: string, required: false, hint: "e.g. G-ABC123XYZ. Leave empty to turn off analytics and the cookie banner. Analytics only records visits on the live domain, and only after a visitor accepts cookies." }
+          - { name: cookieBannerText, label: "Cookie banner text", widget: text, required: false, hint: "Shown with Accept / Reject buttons and a link to the cookie policy." }
