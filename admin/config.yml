@@ -33,10 +33,6 @@ collections:
         label: Homepage
         file: src/content/pages/home.json
         fields:
-          - { name: metaTitle, label: "SEO: page title (browser tab and Google)", widget: string, hint: "Around 50 to 60 characters. Put the service and area first, e.g. Garden Maintenance in Richmond | Green & Noble" }
-          - { name: metaDescription, label: "SEO: description (Google search results)", widget: text, hint: "Around 140 to 160 characters. A plain summary that makes people want to click." }
-          - { name: shareImage, label: "SEO: share picture (optional)", widget: image, required: false, hint: "Shown when the page is shared on WhatsApp, Facebook or LinkedIn. Leave empty to use the top photo." }
-
           - { name: heroImage, label: "Hero: photo", widget: image }
           - { name: heroImageAlt, label: "Hero: photo description (for screen readers)", widget: string }
           - { name: heroEyebrow, label: "Hero: small label", widget: string }
@@ -112,14 +108,20 @@ collections:
           - { name: areasTitle, label: "Areas: heading", widget: string, hint: "Wrap words in *asterisks* to show them in gold italics. The towns are in Site settings." }
           - { name: areasIntro, label: "Areas: intro", widget: text }
           - { name: areasClosing, label: "Areas: closing line", widget: text }
+          - name: seo
+            label: "SEO (Google and sharing)"
+            widget: object
+            collapsed: true
+            hint: "How this page looks in Google and when shared. Click to open."
+            fields:
+              - { name: title, label: "Page title (browser tab and Google)", widget: string, hint: "Around 50 to 60 characters. Put the service and area first, e.g. Garden Maintenance in Richmond | Green & Noble" }
+              - { name: description, label: "Description (Google search results)", widget: text, hint: "Around 140 to 160 characters. A plain summary that makes people want to click." }
+              - { name: image, label: "Share picture (optional)", widget: image, required: false, hint: "Shown when the page is shared on WhatsApp, Facebook or LinkedIn. Leave empty to use the top photo." }
 
       - name: services_page
         label: "Services page"
         file: src/content/pages/services.json
         fields:
-          - { name: metaTitle, label: "SEO: page title (browser tab and Google)", widget: string, hint: "Around 50 to 60 characters. Put the service and area first, e.g. Garden Maintenance in Richmond | Green & Noble" }
-          - { name: metaDescription, label: "SEO: description (Google search results)", widget: text, hint: "Around 140 to 160 characters. A plain summary that makes people want to click." }
-          - { name: shareImage, label: "SEO: share picture (optional)", widget: image, required: false, hint: "Shown when the page is shared on WhatsApp, Facebook or LinkedIn. Leave empty to use the top photo." }
           - { name: heroImage, label: "Hero: photo", widget: image }
           - { name: heroImageAlt, label: "Hero: photo description", widget: string }
           - { name: heroEyebrow, label: "Hero: small label", widget: string }
@@ -305,14 +307,20 @@ collections:
                     fields:
                       - { name: title, label: Question, widget: string }
                       - { name: text, label: "Answer (blank line between paragraphs)", widget: text }
+          - name: seo
+            label: "SEO (Google and sharing)"
+            widget: object
+            collapsed: true
+            hint: "How this page looks in Google and when shared. Click to open."
+            fields:
+              - { name: title, label: "Page title (browser tab and Google)", widget: string, hint: "Around 50 to 60 characters. Put the service and area first, e.g. Garden Maintenance in Richmond | Green & Noble" }
+              - { name: description, label: "Description (Google search results)", widget: text, hint: "Around 140 to 160 characters. A plain summary that makes people want to click." }
+              - { name: image, label: "Share picture (optional)", widget: image, required: false, hint: "Shown when the page is shared on WhatsApp, Facebook or LinkedIn. Leave empty to use the top photo." }
 
       - name: our_work
         label: "Our Work page"
         file: src/content/pages/our-work.json
         fields:
-          - { name: metaTitle, label: "SEO: page title (browser tab and Google)", widget: string, hint: "Around 50 to 60 characters. Put the service and area first, e.g. Garden Maintenance in Richmond | Green & Noble" }
-          - { name: metaDescription, label: "SEO: description (Google search results)", widget: text, hint: "Around 140 to 160 characters. A plain summary that makes people want to click." }
-          - { name: shareImage, label: "SEO: share picture (optional)", widget: image, required: false, hint: "Shown when the page is shared on WhatsApp, Facebook or LinkedIn. Leave empty to use the top photo." }
           - { name: heroImage, label: "Hero: photo", widget: image }
           - { name: heroImageAlt, label: "Hero: photo description", widget: string }
           - { name: heroEyebrow, label: "Hero: small label", widget: string }
@@ -499,14 +507,20 @@ collections:
                     fields:
                       - { name: title, label: Question, widget: string }
                       - { name: text, label: "Answer (blank line between paragraphs)", widget: text }
+          - name: seo
+            label: "SEO (Google and sharing)"
+            widget: object
+            collapsed: true
+            hint: "How this page looks in Google and when shared. Click to open."
+            fields:
+              - { name: title, label: "Page title (browser tab and Google)", widget: string, hint: "Around 50 to 60 characters. Put the service and area first, e.g. Garden Maintenance in Richmond | Green & Noble" }
+              - { name: description, label: "Description (Google search results)", widget: text, hint: "Around 140 to 160 characters. A plain summary that makes people want to click." }
+              - { name: image, label: "Share picture (optional)", widget: image, required: false, hint: "Shown when the page is shared on WhatsApp, Facebook or LinkedIn. Leave empty to use the top photo." }
 
       - name: about
         label: About us
         file: src/content/pages/about.json
         fields:
-          - { name: metaTitle, label: "SEO: page title (browser tab and Google)", widget: string, hint: "Around 50 to 60 characters. Put the service and area first, e.g. Garden Maintenance in Richmond | Green & Noble" }
-          - { name: metaDescription, label: "SEO: description (Google search results)", widget: text, hint: "Around 140 to 160 characters. A plain summary that makes people want to click." }
-          - { name: shareImage, label: "SEO: share picture (optional)", widget: image, required: false, hint: "Shown when the page is shared on WhatsApp, Facebook or LinkedIn. Leave empty to use the top photo." }
           - { name: heroImage, label: "Hero: photo", widget: image }
           - { name: heroImageAlt, label: "Hero: photo description", widget: string }
           - { name: heroEyebrow, label: "Hero: small label", widget: string }
@@ -605,17 +619,32 @@ collections:
                     fields:
                       - { name: title, label: Question, widget: string }
                       - { name: text, label: "Answer (blank line between paragraphs)", widget: text }
+          - name: seo
+            label: "SEO (Google and sharing)"
+            widget: object
+            collapsed: true
+            hint: "How this page looks in Google and when shared. Click to open."
+            fields:
+              - { name: title, label: "Page title (browser tab and Google)", widget: string, hint: "Around 50 to 60 characters. Put the service and area first, e.g. Garden Maintenance in Richmond | Green & Noble" }
+              - { name: description, label: "Description (Google search results)", widget: text, hint: "Around 140 to 160 characters. A plain summary that makes people want to click." }
+              - { name: image, label: "Share picture (optional)", widget: image, required: false, hint: "Shown when the page is shared on WhatsApp, Facebook or LinkedIn. Leave empty to use the top photo." }
 
       - name: contact
         label: Contact
         file: src/content/pages/contact.json
         fields:
-          - { name: metaTitle, label: "SEO: page title (browser tab and Google)", widget: string, hint: "Around 50 to 60 characters. Put the service and area first, e.g. Garden Maintenance in Richmond | Green & Noble" }
-          - { name: metaDescription, label: "SEO: description (Google search results)", widget: text, hint: "Around 140 to 160 characters. A plain summary that makes people want to click." }
-          - { name: shareImage, label: "SEO: share picture (optional)", widget: image, required: false, hint: "Shown when the page is shared on WhatsApp, Facebook or LinkedIn. Leave empty to use the top photo." }
           - { name: heroEyebrow, label: "Banner: small label", widget: string }
           - { name: heroTitle, label: "Banner: heading", widget: string, hint: "Wrap words in *asterisks* to show them in gold italics. The form, phone and email are in Site settings." }
           - { name: heroLede, label: "Banner: intro", widget: text, required: false }
+          - name: seo
+            label: "SEO (Google and sharing)"
+            widget: object
+            collapsed: true
+            hint: "How this page looks in Google and when shared. Click to open."
+            fields:
+              - { name: title, label: "Page title (browser tab and Google)", widget: string, hint: "Around 50 to 60 characters. Put the service and area first, e.g. Garden Maintenance in Richmond | Green & Noble" }
+              - { name: description, label: "Description (Google search results)", widget: text, hint: "Around 140 to 160 characters. A plain summary that makes people want to click." }
+              - { name: image, label: "Share picture (optional)", widget: image, required: false, hint: "Shown when the page is shared on WhatsApp, Facebook or LinkedIn. Leave empty to use the top photo." }
 
   - name: services
     label: Services
@@ -634,10 +663,7 @@ collections:
       - { name: image, label: "Card photo", widget: image, required: false }
       - { name: imageAlt, label: "Card photo description", widget: string, required: false }
       - { name: featured, label: "Featured on the homepage", widget: boolean, default: false, hint: "Featured services get a card with a photo; the others are listed under We also provide" }
-      - { name: metaTitle, label: "SEO: page title (optional)", widget: string, required: false, hint: "Leave empty for: <title> in Surrey & South West London | Green & Noble. Around 50 to 60 characters." }
       - { name: link, label: "Send visitors to another page instead (optional)", widget: string, required: false, hint: "e.g. /property-presentation/. Leave empty for the service's own page." }
-      - { name: metaDescription, label: "SEO: description (Google search results)", widget: text, hint: "Around 140 to 160 characters. A plain summary that makes people want to click." }
-      - { name: shareImage, label: "SEO: share picture (optional)", widget: image, required: false, hint: "Shown when the page is shared on WhatsApp, Facebook or LinkedIn. Leave empty to use the top photo." }
       - { name: heroImage, label: "Page: hero photo (optional)", widget: image, required: false, hint: "Leave empty to use the card photo" }
       - { name: heroImageAlt, label: "Page: hero photo description", widget: string, required: false }
       - { name: heroTitle, label: "Page: heading (optional)", widget: string, required: false, hint: "Wrap words in *asterisks* to show them in gold italics. Leave empty to use the title." }
@@ -737,6 +763,15 @@ collections:
         required: false
         hint: "Projects in this gallery category appear on the page"
         options: ["Garden Transformations", "Lawn Care & Renovation", "Garden Clearances", "Planting & Soft Landscaping", "Hedge & Tree Services", "Patios & Landscaping", "Exterior Cleaning", "Property Presentation"]
+      - name: seo
+        label: "SEO (Google and sharing)"
+        widget: object
+        collapsed: true
+        hint: "How this page looks in Google and when shared. Click to open."
+        fields:
+          - { name: title, label: "Page title (optional)", widget: string, required: false, hint: "Leave empty for: <title> in Surrey & South West London | Green & Noble. Around 50 to 60 characters." }
+          - { name: description, label: "Description (Google search results)", widget: text, hint: "Around 140 to 160 characters. A plain summary that makes people want to click." }
+          - { name: image, label: "Share picture (optional)", widget: image, required: false, hint: "Shown when the page is shared on WhatsApp, Facebook or LinkedIn. Leave empty to use the top photo." }
 
   - name: projects
     label: "Before & after projects"
@@ -787,9 +822,6 @@ collections:
     summary: "{{title}}"
     fields:
       - { name: title, label: "Area name", widget: string, hint: "e.g. Kensington. If the same name is in the areas list (Site settings), it becomes a link to this page." }
-      - { name: metaTitle, label: "SEO: page title (browser tab and Google)", widget: string, hint: "Around 50 to 60 characters, e.g. Garden Maintenance in Richmond | Green & Noble" }
-      - { name: metaDescription, label: "SEO: description (Google search results)", widget: text, hint: "Around 140 to 160 characters." }
-      - { name: shareImage, label: "SEO: share picture (optional)", widget: image, required: false }
       - { name: heroImage, label: "Hero: photo", widget: image }
       - { name: heroImageAlt, label: "Hero: photo description", widget: string }
       - { name: heroEyebrow, label: "Hero: small label", widget: string }
@@ -890,6 +922,15 @@ collections:
         widget: select
         required: false
         options: ["Garden Transformations", "Lawn Care & Renovation", "Garden Clearances", "Planting & Soft Landscaping", "Hedge & Tree Services", "Patios & Landscaping", "Exterior Cleaning", "Property Presentation"]
+      - name: seo
+        label: "SEO (Google and sharing)"
+        widget: object
+        collapsed: true
+        hint: "How this page looks in Google and when shared. Click to open."
+        fields:
+          - { name: title, label: "Page title (browser tab and Google)", widget: string, hint: "Around 50 to 60 characters, e.g. Garden Maintenance in Richmond | Green & Noble" }
+          - { name: description, label: "Description (Google search results)", widget: text, hint: "Around 140 to 160 characters." }
+          - { name: image, label: "Share picture (optional)", widget: image, required: false }
 
   - name: reviews
     label: Reviews
@@ -942,9 +983,15 @@ collections:
     reorder: true
     fields:
       - { name: title, label: Title, widget: string, hint: "Also used as the footer link text" }
-      - { name: metaTitle, label: "SEO: page title (optional)", widget: string, required: false, hint: "Leave empty for: <title> | Green & Noble" }
-      - { name: metaDescription, label: "SEO: description (Google search results)", widget: text }
       - { name: body, label: "Policy text", widget: markdown }
+      - name: seo
+        label: "SEO (Google and sharing)"
+        widget: object
+        collapsed: true
+        hint: "How this page looks in Google and when shared. Click to open."
+        fields:
+          - { name: title, label: "Page title (optional)", widget: string, required: false, hint: "Leave empty for: <title> | Green & Noble" }
+          - { name: description, label: "Description (Google search results)", widget: text }
 
   - name: settings
     label: Site settings
