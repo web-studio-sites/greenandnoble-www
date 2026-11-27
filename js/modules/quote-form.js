@@ -1,3 +1,4 @@
+import { track } from './track.js';
 // Quotation form (QuoteSection.astro): "Enquire" links choose their service
 // in the form, the photo picker shows how many are attached, and the form is
 // sent to Splitforms (address and key in Site settings) without leaving the
@@ -92,6 +93,7 @@ export function initQuoteForm() {
       });
       const reply = await res.json().catch(() => ({}));
       if (!res.ok || reply.success === false) throw new Error(reply.message || String(res.status));
+      track('form_enquiry', { photos: input && input.files ? Math.min(input.files.length, MAX_PHOTOS) : 0 });
       form.hidden = true;
       thanks.hidden = false;
       thanks.focus();
