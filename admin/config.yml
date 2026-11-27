@@ -1042,6 +1042,7 @@ collections:
           - { name: thanksTitle, label: "Quotation form: thank-you heading", widget: string }
           - { name: thanksBody, label: "Quotation form: thank-you text", widget: text }
           - { name: formEndpoint, label: "Quotation form: sending address (set up by Sly Design)", widget: string, required: false, hint: "Leave as it is. If empty, the form asks visitors to call or email instead." }
+          - { name: formAccessKey, label: "Quotation form: Splitforms access key (set up by Sly Design)", widget: string, required: false, hint: "Leave as it is. Where enquiries are emailed is set in the Splitforms dashboard." }
           - name: footerScripts
             label: "Footer scripts"
             label_singular: "script"
